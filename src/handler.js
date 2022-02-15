@@ -1,7 +1,8 @@
 'use strict';
+const uuid = require('uuid').v4;
 
-module.exports.generateRandomNumber = event => {
-  const randomNumber = parseInt(Math.random() * 100);
-  console.log("The random generated integer is:  ", randomNumber);
-  return randomNumber;
+module.exports.generateRandomstring = event => {
+  const randomstring = uuid();
+  console.log("The random generated integer is:  ", randomstring);
+  return randomstring;
 };

@@ -8,7 +8,7 @@ provider:
   
 
 functions:
-  generateRandomNumber:
-    handler: src/handler.generateRandomNumber
+  generateRandomstring:
+    handler: src/handler.generateRandomstring
     timeout: 60 # seconds
     memorySize: 128 # mb
