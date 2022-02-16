@@ -1,14 +1,126 @@
 service: serverlessGit
 
+plugins:
+ ## offline use
+  - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-webpack
+package:
+  individually : true
+
+frameworkVersion: '3'
+
+
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
+  profile: serverlessUser
   region: us-east-1
-  
+  environment:
+    tableName: ${self:custom.tableName}
+    imageUploadBucket: ${self:custom.imageUploadBucket}
+    region: ${self:provider.region}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+        - s3:*
+        - ses:*
+      Resource: '*'
 
 functions:
-  generateRandomstring:
-    handler: src/handler.generateRandomstring
-    timeout: 60 # seconds
-    memorySize: 128 # mb
+  getGameScores:
+    handler: lambdas/endpoints/getGameScores.handler
+    events:
+      - http:
+          path: get-game-scores/{game}
+          method: GET
+          cors: true
+  imageUpload:
+    handler: lambdas/endpoints/imageUpload.handler
+    events:
+      - http:
+          path: image-upload
+          method: POST
+          cors: true
+
+  createPlayerDynamoose:
+    handler: lambdas/endpoints/createPlayer.handler
+    events:
+      - http:
+          path: create-player-score-Dynamoose/{ID}
+          method: POST
+          cors: true
+
+  createPlayerScore:
+    handler: lambdas/endpoints/createPlayerScore.handler
+    events:
+      - http:
+          path: create-player-score/{ID}
+          method: POST
+          cors: true
+  getPlayersScore:
+    handler: lambdas/endpoints/getPlayersScore.handler
+    events:
+      - http:
+          path: get-players-score-Dynamoos
+          method: GET
+          cors: true
+  getPlayerById:
+    handler: lambdas/endpoints/getPlayerById.handler
+    events:
+      - http:
+          path: get-player-By-Id-Dynamoos/{ID}
+          method: GET
+          cors: true
+  queryPlayers:
+    handler: lambdas/endpoints/queryPlayers.handler
+    events:
+      - http:
+          path: query-players-Dynamoos
+          method: GET
+          cors: true
+custom:
+  tableName: s-player-points2
+  imageUploadBucket: s-my-image-upload-bucket-demo-sws
+
+  ## offline use
+  dynamodb:
+        stages:
+            - dev
+        start:
+            port: 8000
+            inMemory: true
+            migrate: true
+        migration:
+            dir: offline/migrations
+
+resources:
+  Resources:
+    ImageUploadBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.imageUploadBucket}
+        AccessControl: PublicRead
+
+    MyDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+          - AttributeName: game
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+        GlobalSecondaryIndexes:
+          - IndexName: game-index
+            KeySchema:
+              - AttributeName: game
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
