@@ -83,7 +83,7 @@
 
 
 
-    name: Deploy Lambda
+name: Deploy Lambda
 
 on:
   push:
