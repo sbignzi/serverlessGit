@@ -1,5 +1,6 @@
 service: serverlessGit
 
+
 plugins:
  ## offline use
   - serverless-offline
