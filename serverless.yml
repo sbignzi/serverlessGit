@@ -83,7 +83,7 @@ functions:
           cors: true
 custom:
   tableName: s-player-points3
-  imageUploadBucket: s-my-image-upload-bucket-demo-sws2
+  imageUploadBucket: s-my-image-upload-bucket-demo-sws3
 
   ## offline use
   dynamodb:
