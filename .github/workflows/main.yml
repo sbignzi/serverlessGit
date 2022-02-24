@@ -107,7 +107,7 @@ jobs:
     - name: Install Serverless Framework
       run: npm install -g serverless
     - run: npm ci 
-     - name: Deploy Lambda functions
+    - name: Deploy Lambda functions
       run: sls deploy -s prod
 
       env:
