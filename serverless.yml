@@ -82,8 +82,8 @@ functions:
           method: GET
           cors: true
 custom:
-  tableName: s-player-points3
-  imageUploadBucket: s-my-image-upload-bucket-demo-sws3
+  tableName: s-player-points-prod
+  imageUploadBucket: s-my-image-upload-bucket-demo-sws-prod
 
   ## offline use
   dynamodb:
