@@ -13,9 +13,9 @@ const documentClient = new AWS.DynamoDB.DocumentClient(options);
 const Dynamoose = {
 
     async create(data, TableName) {
-        const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
+        const Model = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
-            const user = await User.create(data); // If a user with `id=1` already exists in the table, an error will be thrown.
+            const user = await Model.create(data); // If a user with `id=1` already exists in the table, an error will be thrown.
             console.log(user);
             return user
         } catch (error) {
@@ -52,9 +52,6 @@ const Dynamoose = {
             // const results = Data.query(key).contains(value).exec();
             const results = await dynamoose
             .model(TableName, tableSchema)
-            // .query('game')
-            // .contains('uno')
-            // .scan({ 'game': { contains: 'uno' }})
             .scan(key)
             .contains(value)
             .all()
@@ -99,19 +96,19 @@ const Dynamoose = {
         return documentClient.update(params).promise();
     },
 
-    query: async ({ tableName, index, queryKey, queryValue }) => {
-        const params = {
-            TableName: tableName,
-            IndexName: index,
-            KeyConditionExpression: `${queryKey} = :hkey`,
-            ExpressionAttributeValues: {
-                ':hkey': queryValue,
-            },
-        };
+    // query: async ({ tableName, index, queryKey, queryValue }) => {
+    //     const params = {
+    //         TableName: tableName,
+    //         IndexName: index,
+    //         KeyConditionExpression: `${queryKey} = :hkey`,
+    //         ExpressionAttributeValues: {
+    //             ':hkey': queryValue,
+    //         },
+    //     };
 
-        const res = await documentClient.query(params).promise();
+    //     const res = await documentClient.query(params).promise();
 
-        return res.Items || [];
-    },
+    //     return res.Items || [];
+    // },
 };
 module.exports = Dynamoose;
