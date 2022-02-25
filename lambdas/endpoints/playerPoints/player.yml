@@ -2,7 +2,7 @@ createPlayer:
   handler: lambdas/endpoints/playerPoints/handler.create
   events:
     - http:
-        path: player
+        path: player/{id}
         method: post
         cors: true
         private: true
