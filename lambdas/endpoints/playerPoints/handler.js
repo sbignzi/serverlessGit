@@ -89,12 +89,13 @@ module.exports.query = async event => {
     var keys = Object.keys(queryObject);
     const key = keys[0]
     const value = queryObject[key]
+    console.log('key, value', key, value)
     const Players = await dynamoose.query(key, value, tableName).catch(err => {
         console.log('error in dynamo get', err);
         return null;
     });
     if (!Players) {
-        return Responses._400({ message: 'Failed to get user by ID' });
+        return Responses._400({ message: 'Failed to get user by query params' });
     }
 
     return Responses._200(Players);

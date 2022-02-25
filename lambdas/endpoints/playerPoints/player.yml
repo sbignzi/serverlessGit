@@ -11,7 +11,7 @@ listPlayers:
   handler: lambdas/endpoints/playerPoints/handler.get
   events:
     - http:
-        path: player
+        path: player/all
         method: get
         cors: true
         private: true
