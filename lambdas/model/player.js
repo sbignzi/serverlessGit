@@ -1,6 +1,7 @@
 const dynamoose = require("dynamoose");
-const tableName = process.env.PROVIDER_TABLE;
-const ProviderSchema = new dynamoose.Schema(
+const tableName = process.env.tableName;
+
+const PlayerSchema = new dynamoose.Schema(
   {
     ID: {
       hashKey: true,
@@ -10,32 +11,17 @@ const ProviderSchema = new dynamoose.Schema(
       type: String,
       required: true,
     },
-    active: {
-      type: Boolean,
-      default: true,
-      required: true,
-    },
-    filter: {
+    game: {
       type: String,
       required: true,
     },
-    url: {
-      type: String,
+    score: {
+      type: Number,
       required: true,
-    },
-    platform: {
-      type: String,
-      required: true,
-    },
-  },
-  {
-    timestamps: {
-      createdAt: "createDate",
-      updatedAt: "updateDate",
     },
   }
 );
 
-const Provider = dynamoose.model(tableName, ProviderSchema);
+const Player = dynamoose.model(tableName, PlayerSchema);
 
-module.exports.Provider = Provider;
+module.exports.Provider = Player;

@@ -12,8 +12,8 @@ const documentClient = new AWS.DynamoDB.DocumentClient(options);
 
 const Dynamoose = {
 
-    async create(data, TableName) {
-        const Model = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
+    async create(Model, data) {
+        // const Model = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
             const user = await Model.create(data); // If a user with `id=1` already exists in the table, an error will be thrown.
             console.log(user);
@@ -23,10 +23,10 @@ const Dynamoose = {
         }
 
     },
-    async get(TableName) {
-        const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
+    async get(Model) {
+        // const Model = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
-            const users = await User.scan().exec();
+            const users = await Model.scan().exec();
             console.log(users);
             return users
         } catch (error) {
@@ -34,10 +34,10 @@ const Dynamoose = {
         }
 
     },
-    async getById(id, TableName) {
-        const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
+    async getById(Model, id) {
+        // const Model = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
-            const myUser = await User.get({"ID": id});
+            const myUser = await Model.get({"ID": id});
             console.log(myUser);
             return myUser
         } catch (error) {
@@ -45,15 +45,15 @@ const Dynamoose = {
         }
 
     },
-    async query(key, value, TableName) {
+    async query(Model, key, value) {
         // const Data = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
-        const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
+        // const Model = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
        
         // const tableSchema = {"ID": String, "game": String, "name": String, "score": Number}
         try {
             // const results = Data.query(key).contains(value).exec();
             // const results = await dynamoose
-            const results = await User
+            const results = await Model
             // .model(TableName, tableSchema)
             .scan(key)
             .contains(value)
@@ -67,37 +67,37 @@ const Dynamoose = {
 
     },
 
-    async write(data, TableName) {
-        if (!data.ID) {
-            throw Error('no ID on the data');
-        }
+    // async write(data, TableName) {
+    //     if (!data.ID) {
+    //         throw Error('no ID on the data');
+    //     }
 
-        const params = {
-            TableName,
-            Item: data,
-        };
+    //     const params = {
+    //         TableName,
+    //         Item: data,
+    //     };
 
-        const res = await documentClient.put(params).promise();
+    //     const res = await documentClient.put(params).promise();
 
-        if (!res) {
-            throw Error(`There was an error inserting ID of ${data.ID} in table ${TableName}`);
-        }
+    //     if (!res) {
+    //         throw Error(`There was an error inserting ID of ${data.ID} in table ${TableName}`);
+    //     }
 
-        return data;
-    },
+    //     return data;
+    // },
 
-    update: async ({ tableName, primaryKey, primaryKeyValue, updateKey, updateValue }) => {
-        const params = {
-            TableName: tableName,
-            Key: { [primaryKey]: primaryKeyValue },
-            UpdateExpression: `set ${updateKey} = :updateValue`,
-            ExpressionAttributeValues: {
-                ':updateValue': updateValue,
-            },
-        };
+    // update: async ({ tableName, primaryKey, primaryKeyValue, updateKey, updateValue }) => {
+    //     const params = {
+    //         TableName: tableName,
+    //         Key: { [primaryKey]: primaryKeyValue },
+    //         UpdateExpression: `set ${updateKey} = :updateValue`,
+    //         ExpressionAttributeValues: {
+    //             ':updateValue': updateValue,
+    //         },
+    //     };
 
-        return documentClient.update(params).promise();
-    },
+    //     return documentClient.update(params).promise();
+    // },
 
     // query: async ({ tableName, index, queryKey, queryValue }) => {
     //     const params = {

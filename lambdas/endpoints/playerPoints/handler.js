@@ -1,9 +1,7 @@
 const Responses = require('../../controllers/common/API_Responses');
 const dynamoose = require('../../controllers/common/dynamoose');
 
-const tableName = process.env.tableName;
-
-
+const { Player } = require("../../models/player");
 // these methodes use dynamoose 
 
 module.exports.create = async event => {
@@ -17,7 +15,7 @@ module.exports.create = async event => {
     const user = JSON.parse(event.body);
     user.ID = ID;
 
-    const newUser = await dynamoose.create(user, tableName).catch(err => {
+    const newUser = await dynamoose.create(Player, user).catch(err => {
         console.log('error in dynamo write', err);
         return null;
     });
@@ -51,7 +49,7 @@ module.exports.getById = async event => {
     }
 
     let ID = event.pathParameters.ID;
-    const User = await dynamoose.getById(ID, tableName).catch(err => {
+    const User = await dynamoose.getById(Player, ID).catch(err => {
         console.log('error in dynamo get', err);
         return null;
     });
@@ -67,7 +65,7 @@ module.exports.getById = async event => {
 module.exports.get = async event => {
     console.log('event', event);
 
-    const Users = await dynamoose.get(tableName).catch(err => {
+    const Users = await dynamoose.get(Player).catch(err => {
         console.log('error in dynamo write', err);
         return null;
     });
@@ -84,13 +82,14 @@ module.exports.query = async event => {
    const queryObject = event.queryStringParameters
    
     if (!event.queryStringParameters) {
+
         return Responses._400({ message: 'missing query param from the path' });
     }
     var keys = Object.keys(queryObject);
     const key = keys[0]
     const value = queryObject[key]
     console.log('key, value', key, value)
-    const Players = await dynamoose.query(key, value, tableName).catch(err => {
+    const Players = await dynamoose.query(Player, key, value).catch(err => {
         console.log('error in dynamo get', err);
         return null;
     });
