@@ -24,4 +24,4 @@ const PlayerSchema = new dynamoose.Schema(
 
 const Player = dynamoose.model(tableName, PlayerSchema);
 
-module.exports.Provider = Player;
+module.exports.Player = Player;
