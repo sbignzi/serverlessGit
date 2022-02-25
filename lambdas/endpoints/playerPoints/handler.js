@@ -1,5 +1,5 @@
 const Responses = require('../../controllers/common/API_Responses');
-const Dynamo = require('../../controllers/common/Dynamo');
+const dynamoose = require('../../controllers/common/dynamoose');
 
 const tableName = process.env.tableName;
 
@@ -17,7 +17,7 @@ module.exports.create = async event => {
     const user = JSON.parse(event.body);
     user.ID = ID;
 
-    const newUser = await Dynamo.create(user, tableName).catch(err => {
+    const newUser = await dynamoose.create(user, tableName).catch(err => {
         console.log('error in dynamo write', err);
         return null;
     });
@@ -28,6 +28,21 @@ module.exports.create = async event => {
     return Responses._200({ newUser });
 };
 
+// module.exports.delete = async (event) => {
+//     if (!event.pathParameters || !event.pathParameters.ID) {
+//       // failed without an ID
+//       return Responses._400({ message: "missing the ID from the path" });
+//     }
+  
+//     let id = event.pathParameters.ID;
+  
+//     const player = await deleteOne(Provider, id);
+//     if (!provider) {
+//       return Responses._400({ message: "Failed to delete provider by ID" });
+//     }
+  
+//     return Responses._200({ message: `${id} has been deleted` });
+//   };
 
 module.exports.getById = async event => {
     console.log('event', event);
@@ -36,7 +51,7 @@ module.exports.getById = async event => {
     }
 
     let ID = event.pathParameters.ID;
-    const User = await Dynamo.getById(ID, tableName).catch(err => {
+    const User = await dynamoose.getById(ID, tableName).catch(err => {
         console.log('error in dynamo get', err);
         return null;
     });
@@ -52,7 +67,7 @@ module.exports.getById = async event => {
 module.exports.get = async event => {
     console.log('event', event);
 
-    const Users = await Dynamo.get(tableName).catch(err => {
+    const Users = await dynamoose.get(tableName).catch(err => {
         console.log('error in dynamo write', err);
         return null;
     });
@@ -74,7 +89,7 @@ module.exports.query = async event => {
     var keys = Object.keys(queryObject);
     const key = keys[0]
     const value = queryObject[key]
-    const Players = await Dynamo.query(key, value, tableName).catch(err => {
+    const Players = await dynamoose.query(key, value, tableName).catch(err => {
         console.log('error in dynamo get', err);
         return null;
     });
