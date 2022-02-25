@@ -15,7 +15,7 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs12.x
-  # profile: serverlessUser
+  # profile: serverlessUser if we push to git and we do not deploy directly we do not have to have a profile
   region: us-east-1
   environment:
     tableName: ${self:custom.tableName}
@@ -30,98 +30,24 @@ provider:
       Resource: '*'
 
 functions:
-  getGameScores:
-    handler: lambdas/endpoints/getGameScores.handler
-    events:
-      - http:
-          path: get-game-scores/{game}
-          method: GET
-          cors: true
-  imageUpload:
-    handler: lambdas/endpoints/imageUpload.handler
-    events:
-      - http:
-          path: image-upload
-          method: POST
-          cors: true
+  - ${file(./lambdas/endpoints/imageUpload/image.yml)}
+  - ${file(./lambdas/endpoints/playerPoints/player.yml)}
 
-  createPlayerDynamoose:
-    handler: lambdas/endpoints/createPlayer.handler
-    events:
-      - http:
-          path: create-player-score-Dynamoose/{ID}
-          method: POST
-          cors: true
-
-  createPlayerScore:
-    handler: lambdas/endpoints/createPlayerScore.handler
-    events:
-      - http:
-          path: create-player-score/{ID}
-          method: POST
-          cors: true
-  getPlayersScore:
-    handler: lambdas/endpoints/getPlayersScore.handler
-    events:
-      - http:
-          path: get-players-score-Dynamoos
-          method: GET
-          cors: true
-  getPlayerById:
-    handler: lambdas/endpoints/getPlayerById.handler
-    events:
-      - http:
-          path: get-player-By-Id-Dynamoos/{ID}
-          method: GET
-          cors: true
-  queryPlayers:
-    handler: lambdas/endpoints/queryPlayers.handler
-    events:
-      - http:
-          path: query-players-Dynamoos
-          method: GET
-          cors: true
 custom:
   tableName: s-player-points-prod
   imageUploadBucket: s-my-image-upload-bucket-demo-sws-prod
 
   ## offline use
   dynamodb:
-        stages:
-            - dev
-        start:
-            port: 8000
-            inMemory: true
-            migrate: true
-        migration:
-            dir: offline/migrations
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    migration:
+      dir: offline/migrations
 
 resources:
-  Resources:
-    ImageUploadBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.imageUploadBucket}
-        AccessControl: PublicRead
-
-    MyDynamoDbTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.tableName}
-        AttributeDefinitions:
-          - AttributeName: ID
-            AttributeType: S
-          - AttributeName: game
-            AttributeType: S
-        KeySchema:
-          - AttributeName: ID
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
-
-        GlobalSecondaryIndexes:
-          - IndexName: game-index
-            KeySchema:
-              - AttributeName: game
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
+  - ${file(./resources/s3.yml)}
+  - ${file(./resources/dynamodb.yml)}

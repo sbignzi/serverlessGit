@@ -1,10 +1,4 @@
-// import Responses from '../common/API_Responses';
-// import * as fileType from 'file-type';
-// import { v4 as uuid } from 'uuid';
-// import * as AWS from 'aws-sdk';
-
 const Responses = require('../common/API_Responses');
-// const fileType = require('file-type');
 const uuid = require('uuid').v4;
 const AWS = require('aws-sdk');
 
@@ -13,7 +7,7 @@ const s3 = new AWS.S3();
 const allowedMimes = ['image/jpeg', 'image/png', 'image/jpg'];
 // post request have to be sent to:
 // https://0cvmciqvlk.execute-api.us-east-1.amazonaws.com/dev/image-upload
-exports.handler = async event => {
+module.exports.upload = async event => {
     try {
         const body = JSON.parse(event.body);
 
@@ -31,9 +25,6 @@ exports.handler = async event => {
         }
 
         const buffer = Buffer.from(imageData, 'base64');
-        // const fileInfo = await fileType.fromBuffer(buffer);
-        // const detectedExt = fileInfo.ext;
-        // const detectedMime = fileInfo.mime;
         const detectedExt = body.mime.split('/')[1];
         const detectedMime = `${body.mime}`;
 
@@ -56,7 +47,6 @@ exports.handler = async event => {
             })
             .promise();
 
-        // const url = `https://${process.env.imageUploadBucket}.s3-${process.env.region}.amazonaws.com/${key}`;
         const url = `https://${process.env.imageUploadBucket}.s3.amazonaws.com/${key}`;
         return Responses._200({
             imageURL: url,

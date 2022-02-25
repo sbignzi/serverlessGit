@@ -10,67 +10,9 @@ if (process.env.IS_OFFLINE) {
 console.log(options)
 const documentClient = new AWS.DynamoDB.DocumentClient(options);
 
-
-// const dynamoose = require("dynamoose");
-// const tableName = process.env.PROVIDER_TABLE;
-// const ProviderSchema = new dynamoose.Schema(
-//   {
-//     ID: {
-//       hashKey: true,
-//       type: String,
-//     },
-//     name: {
-//       type: String,
-//       required: true,
-//     },
-//     active: {
-//       type: Boolean,
-//       default: true,
-//       required: true,
-//     },
-//     filter: {
-//       type: String,
-//       required: true,
-//     },
-//     url: {
-//       type: String,
-//       required: true,
-//     },
-//     platform: {
-//       type: String,
-//       required: true,
-//     },
-//   },
-//   {
-//     timestamps: {
-//       createdAt: "createDate",
-//       updatedAt: "updateDate",
-//     },
-//   }
-// );
-
-// const Provider = dynamoose.model(tableName, ProviderSchema);
-
-// module.exports.Provider = Provider;
-
 const Dynamo = {
-    async get(ID, TableName) {
-        const params = {
-            TableName,
-            Key: {
-                ID,
-            },
-        };
 
-        const data = await documentClient.get(params).promise();
-
-        if (!data || !data.Item) {
-            throw Error(`There was an error fetching the data for ID of ${ID} from ${TableName}`);
-        }
-        return data.Item;
-    },
-
-    async createDnm(data, TableName) {
+    async create(data, TableName) {
         const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
             const user = await User.create(data); // If a user with `id=1` already exists in the table, an error will be thrown.
@@ -81,7 +23,7 @@ const Dynamo = {
         }
 
     },
-    async getAllDnm(TableName) {
+    async get(TableName) {
         const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
             const users = await User.scan().exec();
@@ -92,7 +34,7 @@ const Dynamo = {
         }
 
     },
-    async getByIdDnm(id, TableName) {
+    async getById(id, TableName) {
         const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         try {
             const myUser = await User.get({"ID": id});
@@ -103,7 +45,7 @@ const Dynamo = {
         }
 
     },
-    async getItemDnm(key, value, TableName) {
+    async query(key, value, TableName) {
         // const Data = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
         const tableSchema = {"ID": String, "game": String, "name": String, "score": Number}
         try {

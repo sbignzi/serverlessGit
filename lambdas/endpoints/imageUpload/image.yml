@@ -1,0 +1,10 @@
+uploadImage:
+  handler: handler.upload
+  events:
+    - http:
+        path: imageUpload
+        method: post
+        cors: true
+        private: true
+
+

@@ -1,0 +1,53 @@
+createPlayer:
+  handler: handler.create
+  events:
+    - http:
+        path: player
+        method: post
+        cors: true
+        private: true
+
+listPlayers:
+  handler: handler.get
+  events:
+    - http:
+        path: player
+        method: get
+        cors: true
+        private: true
+
+getPlayerById:
+  handler: handler.getById
+  events:
+    - http:
+        path: player/{id}
+        method: get
+        cors: true
+        private: true
+
+queryPlayers:
+  handler: handler.query
+  events:
+    - http:
+        path: player
+        method: put
+        cors: true
+        private: true
+
+# deletePlayer:
+#   handler: handler.delete
+#   events:
+#     - http:
+#         path: player/{id}
+#         method: delete
+#         cors: true
+#         private: true
+
+# updatePlayer:
+#   handler: handler.update
+#   events:
+#     - http:
+#         path: player/{id}
+#         method: delete
+#         cors: true
+#         private: true
