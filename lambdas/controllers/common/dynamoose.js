@@ -47,11 +47,14 @@ const Dynamoose = {
     },
     async query(key, value, TableName) {
         // const Data = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
-        const tableSchema = {"ID": String, "game": String, "name": String, "score": Number}
+        const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
+       
+        // const tableSchema = {"ID": String, "game": String, "name": String, "score": Number}
         try {
             // const results = Data.query(key).contains(value).exec();
-            const results = await dynamoose
-            .model(TableName, tableSchema)
+            // const results = await dynamoose
+            const results = await User
+            // .model(TableName, tableSchema)
             .scan(key)
             .contains(value)
             .all()
