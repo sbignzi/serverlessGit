@@ -1,5 +1,5 @@
 createPlayer:
-  handler: handler.create
+  handler: ./handler.create
   events:
     - http:
         path: player
@@ -8,7 +8,7 @@ createPlayer:
         private: true
 
 listPlayers:
-  handler: handler.get
+  handler: ./handler.get
   events:
     - http:
         path: player
@@ -17,7 +17,7 @@ listPlayers:
         private: true
 
 getPlayerById:
-  handler: handler.getById
+  handler: ./handler.getById
   events:
     - http:
         path: player/{id}
@@ -26,7 +26,7 @@ getPlayerById:
         private: true
 
 queryPlayers:
-  handler: handler.query
+  handler: ./handler.query
   events:
     - http:
         path: player
