@@ -30,7 +30,7 @@ queryPlayers:
   events:
     - http:
         path: player
-        method: put
+        method: get
         cors: true
         private: true
 
