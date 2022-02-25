@@ -10,7 +10,7 @@ if (process.env.IS_OFFLINE) {
 console.log(options)
 const documentClient = new AWS.DynamoDB.DocumentClient(options);
 
-const Dynamo = {
+const Dynamoose = {
 
     async create(data, TableName) {
         const User = dynamoose.model(TableName, {"ID": String, "game": String, "name": String, "score": Number});
@@ -114,4 +114,4 @@ const Dynamo = {
         return res.Items || [];
     },
 };
-module.exports = Dynamo;
+module.exports = Dynamoose;
