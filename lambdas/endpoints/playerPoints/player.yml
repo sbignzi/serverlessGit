@@ -1,5 +1,5 @@
 createPlayer:
-  handler: ./handler.create
+  handler: lambdas/endpoints/playerPoints/handler.create
   events:
     - http:
         path: player
