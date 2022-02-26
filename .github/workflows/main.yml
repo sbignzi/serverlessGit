@@ -7,7 +7,7 @@ on:
 
 env:
   # stage: ${env:stage}
-  stage: ${process.env['stage']}
+  stage: ${{process.env['stage']}}
 
 jobs:
   deploy:
