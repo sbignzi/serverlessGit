@@ -39,7 +39,7 @@ functions:
   - ${file(./lambdas/endpoints/playerPoints/player.yml)}
 
 custom:
-  stage: dev
+  stage: ${opt:stage, 'dev'}
   tableName: 
     prod: s-player-points-prod
     dev: s-player-points-dev
