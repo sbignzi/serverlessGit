@@ -2,5 +2,5 @@ Resources:
     ImageUploadBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.imageUploadBucket}
+        BucketName: ${env:imageUploadBucket}
         AccessControl: PublicRead
