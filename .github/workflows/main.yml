@@ -6,7 +6,8 @@ on:
       - main
 
 env:
-  stage: ${self:custom.stage}
+  # stage: ${env:stage}
+  stage: ${process.env['stage']}
 
 jobs:
   deploy:
