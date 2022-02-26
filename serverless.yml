@@ -16,13 +16,13 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: 'dev'
+  stage: ${opt:stage,'dev'}
   # profile: serverlessUser if we push to git and we do not deploy directly we do not have to have a profile
   region: us-east-1
   environment:
     stage:  ${self:custom.stage}
-    tableName : ${self:custom.tableName.${self:opt.stage}}
-    imageUploadBucket: ${self:custom.imageUploadBucket}.${self:opt.stage}}
+    tableName : ${self:custom.tableName.${self:custom.stage}}
+    imageUploadBucket: ${self:custom.imageUploadBucket.${self:custom.stage}}
     # tableName: ${self:custom.tableName}
     # imageUploadBucket: ${self:custom.imageUploadBucket}
     region: ${self:provider.region}
