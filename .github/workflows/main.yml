@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  # SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+  # or if using AWS credentials directly
+  stage: ${{ env:stage }}
+
 jobs:
   deploy:
     name: deploy
@@ -28,10 +33,7 @@ jobs:
     #   uses: serverless/github-action@master
     #   with:
     #     args: deploy -s $process.env['stage']
-    - env:
-      # SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-      # or if using AWS credentials directly
-      stage: ${{ env:stage }}
+    
     - name: Deploy Lambda functions
       run: sls deploy -s $stage
     
