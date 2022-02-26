@@ -20,7 +20,7 @@ provider:
   # profile: serverlessUser if we push to git and we do not deploy directly we do not have to have a profile
   region: us-east-1
   environment:
-    stage:  ${env:stage}
+    stage:  ${self:custom.stage}
     tableName : ${self:custom.tableName.${env:stage}}
     imageUploadBucket: ${self:custom.imageUploadBucket.${env:stage}}
     # tableName : ${self:custom.tableName.${self:custom.stage}}
@@ -42,6 +42,7 @@ functions:
 
 custom:
   # stage: dev
+  stage:  ${env:stage}
   tableName: 
     prod: s-player-points-prod
     dev: s-player-points-dev
