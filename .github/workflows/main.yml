@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  stage: ${env:stage}
+  stage: ${{env:stage}}
 
 jobs:
   deploy:
