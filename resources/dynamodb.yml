@@ -3,7 +3,7 @@ Resources:
     MyDynamoDbTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${env:tableName}
+        TableName: ${self:provider.environment.tableName}
         AttributeDefinitions:
           - AttributeName: ID
             AttributeType: S
