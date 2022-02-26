@@ -42,7 +42,7 @@ functions:
 
 custom:
   # stage: dev
-  stage:  ${env:stage}
+  stage:  ${{ secrets.stage }}
   tableName: 
     prod: s-player-points-prod
     dev: s-player-points-dev
