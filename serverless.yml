@@ -21,8 +21,10 @@ provider:
   region: us-east-1
   environment:
     stage:  ${self:custom.stage}
-    tableName : ${self:custom.tableName.${self:custom.stage}}
-    imageUploadBucket: ${self:custom.imageUploadBucket.${self:custom.stage}}
+    tableName : ${self:custom.tableName.${env:stage}}
+    imageUploadBucket: ${self:custom.imageUploadBucket.${env:stage}}
+    # tableName : ${self:custom.tableName.${self:custom.stage}}
+    # imageUploadBucket: ${self:custom.imageUploadBucket.${self:custom.stage}}
     # tableName: ${self:custom.tableName}
     # imageUploadBucket: ${self:custom.imageUploadBucket}
     region: ${self:provider.region}
@@ -39,7 +41,7 @@ functions:
   - ${file(./lambdas/endpoints/playerPoints/player.yml)}
 
 custom:
-  stage: dev
+  # stage: dev
   tableName: 
     prod: s-player-points-prod
     dev: s-player-points-dev
