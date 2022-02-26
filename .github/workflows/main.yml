@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  stage: ${env:stage}
+  stage: ${custom:stage}
 
 jobs:
   deploy:
