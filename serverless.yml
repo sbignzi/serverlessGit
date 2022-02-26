@@ -21,8 +21,8 @@ provider:
   region: us-east-1
   environment:
     stage:  ${self:custom.stage}
-    tableName : ${self:custom.tableName.${self:custom.stage}}
-    imageUploadBucket: ${self:custom.imageUploadBucket.${self:custom.stage}}
+    tableName : ${self:custom.tableName}.${self:custom.stage}
+    imageUploadBucket: ${self:custom.imageUploadBucket}.${self:custom.stage}
     # tableName: ${self:custom.tableName}
     # imageUploadBucket: ${self:custom.imageUploadBucket}
     region: ${self:provider.region}
