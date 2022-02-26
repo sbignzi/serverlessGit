@@ -5,8 +5,8 @@ on:
     branches:
       - main
 
-# env:
-#   stage: dev
+env:
+  stage: dev
 
 jobs:
   deploy:
@@ -29,7 +29,7 @@ jobs:
       run: sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
     - name: Deploy Lambda functions
-      run: sls deploy -s dev
+      run: sls deploy -s $stage
     
        
 
