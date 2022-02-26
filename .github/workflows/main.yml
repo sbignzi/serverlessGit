@@ -9,7 +9,10 @@ env:
   # stage: ${env:stage}
   # stage: ${{ secrets.stage }}
   stage: ${ env:stage }
-
+  
+# Add serverless-env-generator to your plugins:
+plugins:
+  - serverless-env-generator
 jobs:
   deploy:
     name: deploy
