@@ -29,11 +29,10 @@ jobs:
     #   with:
     #     args: deploy -s $process.env['stage']
     - name: Deploy Lambda functions
-      run: sls deploy -s $stage
-      env:
+      run: sls deploy -s $custom.stage
+      custom:
         # SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
         # or if using AWS credentials directly
         stage: ${{ env:stage }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        
 
