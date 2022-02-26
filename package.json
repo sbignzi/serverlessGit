@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "dotenv": "^16.0.0",
     "dynamoose": "^2.8.5",
     "lambda-hooks": "^0.2.1",
     "serverless-dynamodb-local": "^0.2.40",

@@ -7,8 +7,7 @@ on:
 
 env:
   # stage: ${env:stage}
-  # stage: ${{ secrets.stage }}
-  stage: ${{env:stage}}
+  stage: ${{ secrets.stage }}
 
 jobs:
   deploy:
