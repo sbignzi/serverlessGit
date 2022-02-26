@@ -7,7 +7,7 @@ on:
 
 env:
   # stage: ${env:stage}
-  stage: ${file(./serverless.yml):provider.environment.stage}
+  stage: ${file(../../serverless.yml):provider.environment.stage}
 
 jobs:
   deploy:
