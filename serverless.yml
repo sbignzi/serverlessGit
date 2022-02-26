@@ -16,7 +16,7 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt:stage,'dev'}
+  # stage: ${opt:stage,'dev'}
   # profile: serverlessUser if we push to git and we do not deploy directly we do not have to have a profile
   region: us-east-1
   environment:
