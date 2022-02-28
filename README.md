@@ -7,7 +7,7 @@
 - npm install serverless-offline --save-dev
 - add webpack.config.js file to the root and put inside:
     - const slsw = require('serverless-webpack');
-    module.exports = {
+    - module.exports = {
         target: 'node',
         entry: slsw.lib.entries,
         mode: 'none',
