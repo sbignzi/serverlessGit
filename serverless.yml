@@ -5,7 +5,7 @@ plugins:
  ## offline use
   - serverless-offline
   - serverless-dynamodb-local
-  - serverless-webpack
+  # - serverless-webpack
 package:
   individually : true
 
@@ -17,7 +17,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   # stage: ${opt:stage,'dev'}
-  # profile: serverlessUser
+  profile: serverlessUser
   # profile: serverlessUser we shoulf put profile in offline use 
   #If we push to git and we do not deploy directly we do not have to have a profile 
   region: us-east-1
