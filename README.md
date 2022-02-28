@@ -1,4 +1,4 @@
-# Offline instructions
+# Offline instructions:
 - add serverless-offline to plugins
 - remove serverless-webpack from plugins
 - add profile to provider 
@@ -9,4 +9,4 @@ serverless config credentials --provider aws --key yourAccessKeyId --secret your
 sls offline start
 - add x-api-key: generatedToken to your request header
 
-# Deploying using github
+# Deploying using github instructions:
