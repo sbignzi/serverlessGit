@@ -17,7 +17,9 @@ provider:
   name: aws
   runtime: nodejs12.x
   # stage: ${opt:stage,'dev'}
-  # profile: serverlessUser if we push to git and we do not deploy directly we do not have to have a profile
+  profile: serverlessUser
+  # profile: serverlessUser we shoulf put profile in offline use 
+  #If we push to git and we do not deploy directly we do not have to have a profile 
   region: us-east-1
   environment:
     stage:  ${self:custom.stage}
@@ -42,7 +44,13 @@ functions:
 
 custom:
   # stage: dev
-  stage:  ${{ secrets.stage }}
+  # serverlessIfElse:
+  #   - If: '${{ secrets.stage }}'
+  #     Set:
+  #       stage:  ${{ secrets.stage }}
+  #     ElseSet:
+  #       stage:  ${env:stage}
+  stage:  ${env:stage}
   tableName: 
     prod: s-player-points-prod
     dev: s-player-points-dev
