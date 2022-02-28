@@ -1,5 +1,5 @@
 # Offline instructions:
-- add serverless-offline to plugins
+- add serverless-offline and serverless-webpack to plugins
 - add profile to provider 
 - run:
 ```
