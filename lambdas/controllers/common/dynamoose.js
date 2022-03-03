@@ -67,6 +67,20 @@ const Dynamoose = {
 
     },
 
+    async deleteOne(Model, ID) {
+        try {
+          await Model.delete(ID);
+          return { message: "Delete operation was successful." };
+        //   console.log("Delete operation was successful.")
+        } catch (error) {
+          return { error: error };
+        }
+      },
+
+      async update(Model, instanceObj, ID) {
+        instance = await Model.update({ ID: ID }, instanceObj);
+        return instance;
+      }
     // async write(data, TableName) {
     //     if (!data.ID) {
     //         throw Error('no ID on the data');

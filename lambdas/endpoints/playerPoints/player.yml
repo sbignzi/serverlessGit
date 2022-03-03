@@ -34,20 +34,20 @@ queryPlayers:
         cors: true
         private: true
 
-# deletePlayer:
-#   handler: handler.delete
-#   events:
-#     - http:
-#         path: player/{id}
-#         method: delete
-#         cors: true
-#         private: true
+deletePlayer:
+  handler: lambdas/endpoints/playerPoints/handler.delete
+  events:
+    - http:
+        path: player/{ID}
+        method: delete
+        cors: true
+        private: true
 
-# updatePlayer:
-#   handler: handler.update
-#   events:
-#     - http:
-#         path: player/{id}
-#         method: delete
-#         cors: true
-#         private: true
+updatePlayer:
+  handler: lambdas/endpoints/playerPoints/handler.update
+  events:
+    - http:
+        path: player/{ID}
+        method: put
+        cors: true
+        private: true

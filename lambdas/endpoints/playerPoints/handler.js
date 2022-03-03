@@ -26,21 +26,21 @@ module.exports.create = async event => {
     return Responses._200({ newUser });
 };
 
-// module.exports.delete = async (event) => {
-//     if (!event.pathParameters || !event.pathParameters.ID) {
-//       // failed without an ID
-//       return Responses._400({ message: "missing the ID from the path" });
-//     }
+module.exports.delete = async (event) => {
+    if (!event.pathParameters || !event.pathParameters.ID) {
+      // failed without an ID
+      return Responses._400({ message: "missing the ID from the path" });
+    }
   
-//     let id = event.pathParameters.ID;
+    let id = event.pathParameters.ID;
   
-//     const player = await deleteOne(Provider, id);
-//     if (!provider) {
-//       return Responses._400({ message: "Failed to delete provider by ID" });
-//     }
+    const player = await dynamoose.deleteOne(Player, id);
+    if (!player.message) {
+      return Responses._400({ message: "Failed to delete provider by ID" });
+    }
   
-//     return Responses._200({ message: `${id} has been deleted` });
-//   };
+    return Responses._200({ message: `player with ID=${id} has been deleted` });
+  };
 
 module.exports.getById = async event => {
     console.log('event', event);
@@ -99,3 +99,21 @@ module.exports.query = async event => {
 
     return Responses._200(Players);
 };
+
+module.exports.update = async (event) => {
+    if (!event.pathParameters || !event.pathParameters.ID) {
+      // failed without an ID
+      return Responses._400({ message: "missing the ID from the path" });
+    }
+  
+    let id = event.pathParameters.ID;
+  
+    const body = JSON.parse(event.body);
+  
+    const player = await dynamoose.update(Player, body, id);
+    if (!player) {
+      return Responses._400({ message: "Failed to update Player" });
+    }
+  
+    return Responses._200(player);
+  };

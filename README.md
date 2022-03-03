@@ -61,4 +61,5 @@ jobs:
     - name: Deploy Lambda functions
       run: sls deploy -s $stage
 ```
+- push to derectory
 Happy Coding ! :smile:
