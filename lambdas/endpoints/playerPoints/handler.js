@@ -5,9 +5,9 @@ const { Player } = require("../../models/player");
 // these methodes use dynamoose 
 
 module.exports.create = async event => {
-    console.log('event', event);
 
     if (!event.pathParameters || !event.pathParameters.ID) {
+        console.log({ message: 'missing the ID from the path' })
         return Responses._400({ message: 'missing the ID from the path' });
     }
 
@@ -20,6 +20,7 @@ module.exports.create = async event => {
         return null;
     });
     if (!newUser) {
+        console.log({ message: 'Failed to write user by ID' })
         return Responses._400({ message: 'Failed to write user by ID' });
     }
 
@@ -43,7 +44,7 @@ module.exports.delete = async (event) => {
   };
 
 module.exports.getById = async event => {
-    console.log('event', event);
+    // console.log('event', event);
     if (!event.pathParameters || !event.pathParameters.ID) {
         return Responses._400({ message: 'missing the ID from the path' });
     }
@@ -63,7 +64,7 @@ module.exports.getById = async event => {
 
 
 module.exports.get = async event => {
-    console.log('event', event);
+    // console.log('event', event);
 
     const Users = await dynamoose.get(Player).catch(err => {
         console.log('error in dynamo write', err);
@@ -78,7 +79,7 @@ module.exports.get = async event => {
 
 
 module.exports.query = async event => {
-    console.log('event', event);
+    // console.log('event', event);
    const queryObject = event.queryStringParameters
    
     if (!event.queryStringParameters) {
@@ -88,7 +89,7 @@ module.exports.query = async event => {
     var keys = Object.keys(queryObject);
     const key = keys[0]
     const value = queryObject[key]
-    console.log('key, value', key, value)
+    // console.log('key, value', key, value)
     const Players = await dynamoose.query(Player, key, value).catch(err => {
         console.log('error in dynamo get', err);
         return null;
